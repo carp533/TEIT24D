@@ -17,7 +17,5 @@
 
 !*.md
 !LICENSE
-!list_go_mods.ps1
-!koch_curve.png
 # ...even if they are in subdirectories
 !*/
