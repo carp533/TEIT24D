@@ -17,5 +17,5 @@ func main() {
 
 	// Den String "Hallo Welt auf die Konsole ausgeben."
 	// Println gibt den String aus und schreibt danach einen Zeilenumbruch( "Print line.").
-	fmt.Println("Hello, World!")
+	fmt.Println("🌈Hello, World!🌈")
 }
