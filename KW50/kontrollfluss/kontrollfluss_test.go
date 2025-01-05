@@ -10,7 +10,7 @@ import (
 func ExampleSum() {
 	//Output:
 	//15
-	fmt.Println(Sum(5))
+	fmt.Println(sum(5))
 }
 func ExampleDouble() {
 	//Output:
@@ -57,7 +57,7 @@ func TestSum(t *testing.T) {
 
 		testname := fmt.Sprintf("%d", tt.a)
 		t.Run(testname, func(t *testing.T) {
-			ans := Sum(tt.a)
+			ans := sum(tt.a)
 			if ans != tt.want {
 				t.Errorf("got %d, want %d", ans, tt.want)
 			}
