@@ -2,6 +2,7 @@
 
 Pointer sind Variablen, die eine Speicheradresse einer anderen Variable speichern. 
 
+<!-- Wenn hier kein Diagramm angezeigt wird, online schauen oder VS Plugin Markdown Preview Mermaid Support installieren -->
 ```mermaid
 graph LR
         P["Pointer p
@@ -22,7 +23,7 @@ graph LR
 ## Wichtige Konzepte:
 
 1. `&x` (Adresse von): Gibt die Speicheradresse einer Variable zurück
-2. `*x` (Wert von x, Dereferenzierung): Greift auf den Wert an einer Speicheradresse (einer Pointer Variablen) zu
+2. `*p` (Wert von x, Dereferenzierung): Greift auf den Wert an einer Speicheradresse (einer Pointer Variablen) zu
 3. Pointer-Typ wird mit `*T` deklariert, wobei T der Typ der referenzierten Variable ist
 
 Hinweis: Go hat keine Pointer-Arithmetik wie in C oder C++. Das macht die Arbeit mit Pointern sicherer und einfacher.
