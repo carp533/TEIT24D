@@ -5,7 +5,11 @@ Zähler verwendest:
    for i:=0; i< len(array)-1; i++ {
       for j:=0; j < len(array)-i-1; j++ {
 ```
-gib am Ende der äußeren Schleife das Array aus. Führe den Algorithmus auf Papier aus und vergleiche das mit der Ausgabe deines
-Programms.
+gib am Ende der äußeren Schleife das Array aus. Führe den Algorithmus auf 
+Papier aus und vergleiche das mit der Ausgabe deines Programms.
 
 # Aufgabe 2: Programmiere die binäre Suche
+
+# Aufgabe 3: Programmiere die Funktionen countWords und MostFrequentWord
+Hinweis: verwende die Funktion strings.Fields(text), um den String in eine
+Liste mit Wörten aufzuteilen
