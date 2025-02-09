@@ -88,3 +88,28 @@ func main() {
 	fmt.Println("ll.Size()=", ll.Size())
 	ll.Print() // Output: 1 2 3 3 3 3
 }
+//Lösung für 3b:
+func (ll *LinkedList) RemoveValue(n int) {
+	if ll.head == nil {
+		return
+	}
+	if ll.head.data == n {
+		ll.head = ll.head.next
+		ll.RemoveValue(n)
+		return
+	}
+	ll.head.removeValues(n)
+}
+
+func (node *Node) removeValues(n int) {
+	if node.next == nil {
+		return
+	}
+	if node.next.data == n {
+		node.next = node.next.next
+		node.removeValues(n)
+		return
+	}
+	node.next.removeValues(n)
+
+}
