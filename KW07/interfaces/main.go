@@ -93,7 +93,7 @@ type Student struct {
 
 func (i Student) String() string {
 	res := "da der Datentyp Student das interface Stringer() des Paketes fmt implementiert\n"
-	res += "wird dieser Text angezeigt."
+	res += "wird dieser Text angezeigt.\n"
 	res += fmt.Sprintf("Der Name = %v\n", i.name)
 	res += fmt.Sprintf("Matrikelnummer = :%v\n", i.matnr)
 	return res
