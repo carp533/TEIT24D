@@ -45,6 +45,7 @@ func (t *BinarySearchTree) search(value rune) bool {
 }
 
 func (node *Node) search(key rune) bool {
+	_ = key
 	return false
 }
 
