@@ -4,6 +4,32 @@ import (
 	"testing"
 )
 
+// Lösung für 3b:
+func (ll *LinkedList) RemoveValue(n int) {
+	if ll.head == nil {
+		return
+	}
+	if ll.head.data == n {
+		ll.head = ll.head.next
+		ll.RemoveValue(n)
+		return
+	}
+	ll.head.removeValues(n)
+}
+
+func (node *Node) removeValues(n int) {
+	if node.next == nil {
+		return
+	}
+	if node.next.data == n {
+		node.next = node.next.next
+		node.removeValues(n)
+		return
+	}
+	node.next.removeValues(n)
+
+}
+
 // Hilfsfunktion zum Erstellen einer LinkedList aus einer Slice
 func createLinkedList(values []int) *LinkedList {
 	ll := &LinkedList{}
