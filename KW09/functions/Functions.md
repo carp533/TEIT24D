@@ -1,18 +1,13 @@
-package main
+# Funktionen
 
-import "fmt"
-
-func main() {
-	DEMO_Variadic()
-	DEMO_AnonymeFunktionen()
-	DEMO_FunktionenAlsParameter()
-	DEMO_Closures()
-}
-
-/*Variadic Functions
+## Variadic Functions
 variadische Funktionen können eine variable Zahl von Eingaben empfangen.
-Dies wird in der Signatur mit ...Datentyp gemacht.
-fmt.Println ist eine variadische Funktionen*/
+Dies wird in der Signatur mit ...Datentyp gemacht. In der Funktion kann ist
+die Eingabe dann eine Liste: []Datentyp.
+```fmt.Println``` ist eine variadische Funktionen.
+Mit dem ```...``` Operator kann man eine Liste in "entpacken".
+
+```go
 func variadic(i ...int) {
 	//i ist kein int, sondern eine Liste von int
 	fmt.Printf("i:%v, %T\n", i, i)
@@ -26,8 +21,13 @@ func DEMO_Variadic() {
 	variadic(1, 2, 3)  //Aufruf mit drei int
 	variadic(liste...) //liste... "entpackt" die Liste in einzelne Werte
 }
+```
 
-/*Anonyme Funktion*/
+# anonyme Funktionen
+anonyme Funktionen sind Funktionen ohne Namen. Sie können einer Variablen
+zugewießen werden oder als Ein- oder Ausgabeparameter verwedent werden.
+Beachte die Klammern: mit "()" wird die Funktion direkt aufgerufen.
+```go
 func DEMO_AnonymeFunktionen() {
 
 	// achte auf die Klammern ()
@@ -48,35 +48,11 @@ func DEMO_AnonymeFunktionen() {
 	}("TEIT24") //wird direkt mit ("TEIT24") aufgerufen
 
 }
-
-/*Funktionen als Ein- und Ausgabeparameter*/
-// die Funktion funcInput hat eine Funktion als Eingabe
-func funcInput(a func(x, y int) int) {
-	fmt.Println("Funktion als Eingabe. ", a(4, 5))
-}
-
-// die Funktion funcOutput hat eine Funktion als Rückgabeparameter
-func funcOutput(x int) func(a, b int) int {
-	f := func(a, b int) int {
-		return x * (a + b)
-	}
-	return f
-}
-
-func DEMO_FunktionenAlsParameter() {
-	// Funktionen als Eingabeparameter
-	f := func(a, b int) int {
-		return a * b
-	}
-	// die Funktion funcInput hat eine Funktion (f) als Eingabe
-	funcInput(f)
-
-	f2 := funcOutput(2)
-	fmt.Println("Funktion als Ausgabe. ", f2(6, 7))
-
-}
-
-/*Closure*/
+```
+# Closures
+ein closure ist eine anonyme Funktion, die noch auf einen Wert außerhalb der
+Funktion zugreift. Jede closure hält ihre Variablen.
+```go
 func DEMO_Closures() {
 
 	//closure: eine anonyme Funktion, die auf eine "äußere" Variable zugreift
@@ -100,7 +76,6 @@ func DEMO_Closures() {
 
 }
 
-// Beispiel für closure & Gültigkeit Variablen
 func appendStr() func(string) string {
 	t := "Hello"
 	c := func(b string) string {
@@ -109,3 +84,17 @@ func appendStr() func(string) string {
 	}
 	return c
 }
+```
+# Funktionen als Ein-/Ausgabe
+```go
+func funcInput(a func(x, y int) int) {
+	fmt.Println("Funktion als Eingabe. ", a(4, 5))
+}
+
+func funcOutput(x int) func(a, b int) int {
+	f := func(a, b int) int {
+		return x * (a + b)
+	}
+	return f
+}
+```
