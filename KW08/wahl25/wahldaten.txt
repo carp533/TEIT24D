@@ -1,0 +1,8 @@
+Partei 1, 8774920
+Partei 2, 11901558
+Partei 3, 4809233
+Partei 4, 5291013
+Partei 5, 2255864
+Partei 6, 6814408
+Partei 7, 2402827
+Partei 8, 55578
