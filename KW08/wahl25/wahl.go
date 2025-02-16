@@ -59,14 +59,13 @@ func main() {
 		fmt.Printf("%15s: %15d Stimmen, %3d Sitze\n", p.name, p.stimmen, p.sitze)
 	}
 
-	koalitionen := KalkuliereKoalitionen(parteienGr5Proz, gesamtSitze/2)
+	koalitionen := KalkuliereKoalitionen(parteienGr5Proz, gesamtSitze/2+1)
 	// sucheKoalitionen(parteienGr5Proz, gesamtSitze/2)
 	fmt.Printf("\n%d Mögliche Koalitionen:\n", len(koalitionen))
 	fmt.Println("=================================")
 	for _, k := range koalitionen {
 		fmt.Println(k)
 	}
-
 }
 
 func wahldatenLesen(filename string) ([]Partei, error) {
@@ -140,94 +139,42 @@ func sitzVerteilung(parteien []Partei, gesamtSitze int) {
 	})
 }
 
-// Hilfsfunktion
-func enthalten(koal Koalition, koals []Koalition) bool {
-	neu := make(map[string]bool)
-	for _, p := range koal.Parteien {
-		neu[p.name] = true
-	}
+func KalkuliereKoalitionen(parteien []Partei, minSitze int) []Koalition {
+	var reslist [][]Partei
+	var helper func(index int, currentCombination []Partei, sitzeakt int, sitzeuebr int)
 
-	for _, v := range koals {
-		if len(v.Parteien) >= len(koal.Parteien) {
-			continue
+	helper = func(index int, kombAkt []Partei, sitzeakt int, sitzeuebr int) {
+		if sitzeakt >= minSitze {
+			reslist = append(reslist, append([]Partei{}, kombAkt...))
+			return
 		}
 
-		istEnhalten := true
-		for _, p := range v.Parteien {
-			if !neu[p.name] {
-				istEnhalten = false
-				break
-			}
+		if sitzeakt+sitzeuebr < minSitze {
+			return
 		}
-		if istEnhalten {
-			return true
+
+		for i := index; i < len(parteien); i++ {
+			helper(i+1, append(kombAkt, parteien[i]), sitzeakt+parteien[i].sitze, sitzeuebr-parteien[i].sitze)
 		}
 	}
-	return false
-}
 
-func rekursiveKoalitionssuche(parteien []Partei, aktuelleSitze int, aktuelleParteien []Partei,
-	fehlSitze int, startIndex int, ergebnis *[]Koalition) {
+	gesamtSitze := 0
+	for _, p := range parteien {
+		gesamtSitze += p.sitze
+	}
 
-	if aktuelleSitze >= fehlSitze {
-		neueKoalition := Koalition{
-			Parteien: make([]Partei, len(aktuelleParteien)),
-			Summe:    aktuelleSitze,
+	helper(0, []Partei{}, 0, gesamtSitze)
+	ergebnis := make([]Koalition, 0)
+	for _, v := range reslist {
+		sum := 0
+		for _, p := range v {
+			sum += p.sitze
 		}
-		copy(neueKoalition.Parteien, aktuelleParteien)
-
-		if !enthalten(neueKoalition, *ergebnis) {
-			*ergebnis = append(*ergebnis, neueKoalition)
-		}
-		return
+		ergebnis = append(ergebnis, Koalition{Parteien: v, Summe: sum})
 	}
-
-	// Wenn keine weiteren Parteien verfügbar sind
-	if startIndex >= len(parteien) {
-		return
-	}
-
-	// Berechne die maximal möglichen restlichen Sitze
-	restSitze := 0
-	for j := startIndex; j < len(parteien); j++ {
-		restSitze += parteien[j].sitze
-	}
-	if aktuelleSitze+restSitze < fehlSitze {
-		return
-	}
-
-	// Versuche für jede verbleibende Partei
-	for i := startIndex; i < len(parteien); i++ {
-		partei := parteien[i]
-
-		// Füge aktuelle Partei hinzu
-		aktuelleParteien = append(aktuelleParteien, partei)
-
-		// Rekursiver Aufruf
-		rekursiveKoalitionssuche(parteien,
-			aktuelleSitze+partei.sitze,
-			aktuelleParteien,
-			fehlSitze,
-			i+1,
-			ergebnis)
-
-		// Entferne die Partei wieder
-		aktuelleParteien = aktuelleParteien[:len(aktuelleParteien)-1]
-	}
-}
-
-func KalkuliereKoalitionen(parteien []Partei, fehlSitze int) []Koalition {
-	sort.Slice(parteien, func(i, j int) bool {
-		return parteien[i].sitze > parteien[j].sitze
-	})
-
-	var ergebnis []Koalition
-	rekursiveKoalitionssuche(parteien, 0, []Partei{}, fehlSitze, 0, &ergebnis)
-
 	// Sortiere Ergebnisse nach Sitzen
 	sort.Slice(ergebnis, func(i, j int) bool {
 		return ergebnis[i].Summe < ergebnis[j].Summe
 	})
-
 	return ergebnis
 }
