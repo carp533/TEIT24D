@@ -19,11 +19,6 @@ var field = [9][9]int{
 	{0, 0, 0, 0, 8, 0, 0, 7, 9},
 }
 
-func main() {
-	field = parseInput("53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79")
-	printBoard(field)
-}
-
 func printBoard(board [9][9]int) {
 	fmt.Println("+-------+-------+-------+")
 	for row := 0; row < 9; row++ {
@@ -59,4 +54,62 @@ func parseInput(input string) [9][9]int {
 		}
 	}
 	return board
+}
+func canPut(x int, y int, value int) bool {
+	return !alreadyInVertical(x, y, value) &&
+		!alreadyInHorizontal(x, y, value) &&
+		!alreadyInSquare(x, y, value)
+}
+
+func alreadyInVertical(x int, y int, value int) bool {
+	for i := range [9]int{} {
+		if field[i][x] == value {
+			return true
+		}
+	}
+	return false
+}
+
+func alreadyInHorizontal(x int, y int, value int) bool {
+	for i := range [9]int{} {
+		if field[y][i] == value {
+			return true
+		}
+	}
+	return false
+}
+
+func alreadyInSquare(x int, y int, value int) bool {
+	sx, sy := int(x/3)*3, int(y/3)*3
+	for dy := range [3]int{} {
+		for dx := range [3]int{} {
+			if field[sy+dy][sx+dx] == value {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func next(x int, y int) (int, int) {
+	nextX, nextY := (x+1)%9, y
+	if nextX == 0 {
+		nextY = y + 1
+	}
+	return nextX, nextY
+}
+
+func solve(x int, y int) bool {
+	return false
+}
+
+func main() {
+	field = parseInput("53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79")
+	printBoard(field)
+	if solve(0, 0) {
+		fmt.Println("Found solution")
+		printBoard(field)
+	} else {
+		fmt.Println("No solution")
+	}
 }
