@@ -100,7 +100,24 @@ func next(x int, y int) (int, int) {
 }
 
 func solve(x int, y int) bool {
+	if y == 9 {
+		return true
+	}
+	if field[y][x] != 0 {
+		return solve(next(x, y))
+	}
+	for i := range [9]int{} {
+		var v = i + 1
+		if canPut(x, y, v) {
+			field[y][x] = v
+			if solve(next(x, y)) {
+				return true
+			}
+			field[y][x] = 0
+		}
+	}
 	return false
+
 }
 
 func main() {
