@@ -36,8 +36,21 @@ func (g *Graph) AddEdge(u, v int) {
 func (g *Graph) BFS(start int) []int {
 	var result []int
 	visited := make(map[int]bool)
-	// queue := []int{start}
+	queue := []int{start}
 	visited[start] = true
+
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
+		result = append(result, node)
+
+		for _, neighbor := range g.adjList[node] {
+			if !visited[neighbor] {
+				queue = append(queue, neighbor)
+				visited[neighbor] = true
+			}
+		}
+	}
 
 	return result
 }
