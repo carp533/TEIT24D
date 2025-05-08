@@ -65,14 +65,14 @@ func (h *Heap) Right(index int) int {
 }
 
 func main() {
-	// var heap HeapNode
-	heap := NewHeap([]int{42, 29, 18, 14, 7, 18, 12, 11, 5, 13})
+	var heap HeapNode
+	heap = NewHeap([]int{42, 29, 18, 14, 7, 18, 12, 11, 5, 13})
 	index := 1
 
 	leftChild := heap.Left(index)
 	rightChild := heap.Right(index)
 
-	// fmt.Printf("Knoten %d (Wert: %d)\n", index, heap.elements[index])
+	fmt.Printf("Knoten %d (Wert: %d)\n", index, heap.(*Heap).elements[index])
 	fmt.Printf("Linkes Kind: %d\n", leftChild)
 	fmt.Printf("Rechtes Kind: %d\n", rightChild)
 }

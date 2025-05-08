@@ -111,6 +111,8 @@ func solve(x int, y int) bool {
 		if canPut(x, y, v) {
 			field[y][x] = v
 			if solve(next(x, y)) {
+				// lösung gefunden, sammeln oder ausgeben
+				//printBoard(field)
 				return true
 			}
 			field[y][x] = 0
