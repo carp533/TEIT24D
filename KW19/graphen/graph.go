@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 // Aufgabe: programmiere die BFS mit einer adjacency list
 // schreibe eine Testfunktion mit folgendem graph und startknoten 1
 // 1: {2, 4}
@@ -75,25 +71,12 @@ func (g *Graph) dfsHelper(node int, visited map[int]bool, result *[]int) {
 	}
 }
 
-func main() {
-	graph := NewGraph()
-	// var numNodes, numEdges, u, v, startNode int
-	// fmt.Print("Number of nodes: ")
-	// fmt.Scan(&numNodes)
-	// fmt.Print("Number of edges: ")
-	// fmt.Scan(&numEdges)
-	// fmt.Println("Edges:")
-	// for i := 0; i < numEdges; i++ {
-	// 	fmt.Scan(&u, &v)
-	// 	graph.AddEdge(u, v)
-	// }
-	// fmt.Print("Starting node: ")
-	// fmt.Scan(&startNode)
-
-	traversal := graph.BFS(1)
-	fmt.Print("BFS Traversal: ")
-	for _, node := range traversal {
-		fmt.Printf("%d ", node)
-	}
-	fmt.Println()
-}
+// func main() {
+// 	graph := NewGraph()
+// 	traversal := graph.BFS(1)
+// 	fmt.Print("BFS Traversal: ")
+// 	for _, node := range traversal {
+// 		fmt.Printf("%d ", node)
+// 	}
+// 	fmt.Println()
+// }
