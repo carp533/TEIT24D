@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -24,13 +25,33 @@ hinzu. Schreibe für diese Funktion einen Benchmark und vergleiche das Ergebnis 
 */
 
 func PrimeNumbers(N int) []int {
-	return nil
+	sieve := make([]bool, N+1)
+	for i := 2; i < len(sieve); i++ {
+		sieve[i] = true
+	}
+	x := int(math.Sqrt(float64(N)) + 1)
+	for i := 2; i < x; i++ {
+		if sieve[i] {
+			// alle Vielfachen von i streichen (2*i, 3*i, 4*i,...), aber nicht i
+			for j := 2 * i; j < len(sieve); j += i {
+				sieve[j] = false
+			}
+		}
+	}
+	// die nicht gestrichenen Zahlen sind die Primzahlen
+	result := make([]int, 0)
+	for idx, ok := range sieve {
+		if ok {
+			result = append(result, idx)
+		}
+	}
+	return result
 }
 
 func ExamplePrimeNumbers() {
 	//Output:
 	//[2 3 5 7 11 13 17 19 23 29]
-	primes := PrimeNumbers(30)
+	primes := PrimeNumbers(100000)
 	fmt.Println(primes)
 }
 
